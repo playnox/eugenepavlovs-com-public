@@ -1,0 +1,91 @@
+// calculates the width of a column based on a number of factors.
+@function grid-column($columns) {
+    $width: 0%;
+
+
+    // parsing percents, decimals, and column counts
+    @if type-of($columns) == 'number' {
+        @if unit($columns) == '%' {
+            $width: $columns;
+        }
+        @else if $columns < 1 {
+            $width: percentage($columns);
+        }
+        @else {
+            $width: percentage($columns / $grid-column-count);
+        }
+    }
+
+
+    // parsing "n of n" expressions
+    @else if type-of($columns) == 'list' {
+        @if length($columns) != 3 {
+            @error 'Wrong syntax for grid-column(). Use the format "n of n".';
+        }
+        @else {
+            $width: percentage(nth($columns, 1) / nth($columns, 3));
+        }
+    }
+
+
+    // anything else is incorrect
+    @else {
+        @error 'Wrong syntax for grid-column(). Use a number, decimal, percentage, or "n of n".';
+    }
+    @return $width;
+}
+
+
+// creates a grid column.
+@mixin grid-column(
+    $columns: $grid-column-count,
+    $gutters: $grid-column-gutter
+) {
+    @include grid-column-size($columns);
+    float: $global-left;
+
+
+    // gutters
+    @include grid-column-gutter($gutters: $gutters);
+
+
+    // Last column alignment
+    @if $grid-column-align-edge {
+        &:last-child:not(:first-child) {
+            float: $global-right;
+        }
+    }
+}
+
+
+// creates a grid column row. This is the equivalent of adding .row and .column to the same element.
+@mixin grid-column-row(
+    $gutters: $grid-column-gutter
+) {
+    @include grid-row;
+    @include grid-column($gutters: $gutters);
+    &,
+    &:last-child {
+      float: none;
+    }
+}
+
+
+
+// quick exports
+@function grid-col(
+    $columns: $grid-column-count
+) {
+    @return grid-column($columns);
+}
+@mixin grid-col(
+    $columns: $grid-column-count,
+    $gutters: $grid-column-gutter
+) {
+    @include grid-column($columns, $gutters);
+}
+@mixin grid-col-row(
+    $gutters: $grid-column-gutter
+) {
+    @include grid-column-row($gutters);
+}

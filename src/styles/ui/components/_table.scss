@@ -1,0 +1,266 @@
+$table-background: get-color(snow)  !default;
+$table-color-scale: 5% !default;
+$table-border: 1px solid smart-scale($table-background, $table-color-scale) !default;
+$table-padding: rem-calc(8 10 10) !default;
+$table-hover-scale: 2% !default;
+$table-row-hover: darken($table-background, $table-hover-scale) !default;
+$table-row-stripe-hover: darken($table-background, $table-color-scale + $table-hover-scale) !default;
+$table-is-striped: true !default;
+$table-striped-background: smart-scale($table-background, $table-color-scale) !default;
+$table-stripe: even !default;
+$table-head-background: smart-scale($table-background, $table-color-scale / 2) !default;
+$table-head-row-hover: darken($table-head-background, $table-hover-scale) !default;
+$table-foot-background: smart-scale($table-background, $table-color-scale) !default;
+$table-foot-row-hover: darken($table-foot-background, $table-hover-scale) !default;
+$table-head-font-color: $body-font-color !default;
+$table-foot-font-color: $body-font-color !default;
+$show-header-for-stacked: false !default;
+
+
+
+@mixin table-stripe($stripe: $table-stripe) {
+    tr {
+
+
+        // if stripe is set to even, darken the even rows.
+        @if $stripe == even {
+            &:nth-child(even) {
+                border-bottom: 0;
+                background-color: $table-striped-background;
+            }
+        }
+
+
+        // if stripe is set to odd, darken the odd rows.
+        @else if $stripe == odd {
+            &:nth-child(odd) {
+                background-color: $table-striped-background;
+            }
+        }
+    }
+}
+
+
+@mixin table-unstripe() {
+    tr {
+        border-bottom: 0;
+        border-bottom: $table-border;
+        background-color: $table-background;
+    }
+}
+
+
+@mixin table-children-styles($stripe: $table-stripe, $is-striped: $table-is-striped) {
+    thead,
+    tbody,
+    tfoot {
+        border: $table-border;
+        background-color: $table-background;
+    }
+
+
+    // caption
+    caption {
+        padding: $table-padding;
+        font-weight: $global-weight-bold;
+    }
+
+
+    // table head
+    thead {
+        background: $table-head-background;
+        color: $table-head-font-color;
+    }
+
+
+    // table foot
+    tfoot {
+        background: $table-foot-background;
+        color: $table-foot-font-color;
+    }
+
+
+    // table head and foot
+    thead,
+    tfoot {
+
+
+        // rows within head and foot
+        tr {
+            background: transparent;
+        }
+
+
+        // cells within head and foot
+        th,
+        td {
+            padding: $table-padding;
+            font-weight: $global-weight-bold;
+            text-align: #{$global-left};
+        }
+    }
+
+
+    // table rows
+    tbody {
+        th,
+        td {
+            padding: $table-padding;
+        }
+    }
+
+
+    // if tables are striped
+    @if $is-striped == true {
+        tbody {
+            @include table-stripe($stripe);
+        }
+        &.unstriped {
+            tbody {
+                @include table-unstripe();
+                background-color: $table-background;
+            }
+        }
+    }
+
+
+    // if tables are not striped
+    @else if $is-striped == false {
+        tbody {
+            @include table-unstripe();
+        }
+
+        &.striped {
+            tbody {
+                @include table-stripe($stripe);
+            }
+        }
+    }
+}
+
+
+// adds the general styles for tables.
+@mixin table(
+    $stripe: $table-stripe,
+    $nest: false
+) {
+    width: 100%;
+    margin-bottom: $global-margin;
+    border-radius: $global-radius;
+    @if $nest {
+        @include table-children-styles($stripe);
+    }
+    @else {
+        @at-root {
+            @include table-children-styles($stripe);
+        }
+    }
+}
+
+
+// adds the ability to horizontally scroll the table when the content overflows horizontally.
+@mixin table-scroll {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+// slightly darkens the table rows on hover.
+@mixin table-hover {
+    thead tr {
+        &:hover {
+            background-color: $table-head-row-hover;
+        }
+    }
+    tfoot tr {
+        &:hover {
+            background-color: $table-foot-row-hover;
+        }
+    }
+    tbody tr {
+        &:hover {
+            background-color: $table-row-hover;
+        }
+    }
+    @if $table-is-striped == true {
+        @if($table-stripe == even) {
+            &:not(.unstriped) tr:nth-of-type(even):hover {
+                background-color: $table-row-stripe-hover;
+            }
+        }
+        @else if($table-stripe == odd) {
+            &:not(.unstriped) tr:nth-of-type(odd):hover {
+                background-color: $table-row-stripe-hover;
+            }
+        }
+    }
+    @else if $table-is-striped == false {
+        @if($table-stripe == even) {
+            &.striped tr:nth-of-type(even):hover {
+                background-color: $table-row-stripe-hover;
+            }
+        }
+        @else if($table-stripe == odd) {
+            &.striped tr:nth-of-type(odd):hover {
+                background-color: $table-row-stripe-hover;
+            }
+        }
+    }
+}
+
+
+// adds styles for a stacked table. Useful for small-screen layouts.
+@mixin table-stack($header: $show-header-for-stacked) {
+    @if $header {
+        thead {
+            th:first-child {
+                display: block;
+            }
+            th {
+                display: none;
+            }
+        }
+    }
+    @else {
+        thead {
+            display: none;
+        }
+    }
+    tfoot {
+        display: none;
+    }
+    tr,
+    th,
+    td {
+        display: block;
+    }
+    td {
+        border-top: 0;
+    }
+}
+
+
+// export
+@mixin ui-table($nest: false) {
+    table {
+        @include table($nest: $nest);
+    }
+    table.stack {
+        @include breakpoint(medium down) {
+            @include table-stack;
+        }
+    }
+    table.scroll {
+        @include table-scroll;
+    }
+    table.hover {
+        @include table-hover;
+    }
+    .table-scroll {
+        overflow-x: auto;
+        table {
+            width: auto;
+        }
+    }
+}

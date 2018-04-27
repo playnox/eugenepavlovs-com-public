@@ -1,0 +1,26 @@
+<section id="about" class="offset grayscale">
+    <ui-headline [title]="component.title"></ui-headline>
+    <div class="row">
+        <div class="small-12 medium-5 large-4 columns">
+            <div class="row">
+                <div class="small-12 medium-12 large-12 columns center downset">
+                    <img class="circle my-picture" src="{{ component.media.url }}" alt="This is me!">
+                </div>
+                <div class="small-12 medium-12 large-12 columns center">
+                    <ul class="character list-none">
+                        <li>{{ component.contact.city }}, {{ component.contact.state }}</li>
+                        <li><a href="tel:+1{{ component.contact.phone }}">{{ component.contact.phone }}</a></li>
+                        <li><a href="mailto:eugene@noxberry.com">{{ component.contact.email }}</a></li>
+                    </ul>
+                    <br class="show-for-small" />
+                </div>
+            </div>
+        </div>
+
+
+        <!-- about me content -->
+        <div class="small-12 medium-7 large-8 columns" [innerHtml]="component.content">
+            
+        </div>
+    </div>
+</section>

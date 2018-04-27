@@ -1,0 +1,25 @@
+<div class="screen">
+    
+    
+    <!-- headline title -->
+    <header class="header vertical-align">
+        <div class="row">
+            <div class="small-12 columns center">
+                <h1 class="text-uppercase text-hero text-primary title">{{ component.title }}</h1>
+                <h4 class="text-uppercase text-primary">{{ component.content }}</h4>
+                <a pageScroll href="#about" class="fab xlarge hollow circle"><i class="icon-arrow-down font-hero"></i></a>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- background video screen -->
+    <div class="bg-video hide-for-small">
+        <div class="bg-video">
+            <video autoplay="" loop="" muted="">
+                <source *ngFor="let row of component.media" src="{{ row.url }}" type="video/{{ row.name }}">
+            </video>
+        </div>
+        <div class="bg-dark-fade"></div>
+    </div>
+</div>

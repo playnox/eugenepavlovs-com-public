@@ -1,0 +1,26 @@
+<section id="projects" [bg]="['assets/images/bg-projects.jpg']" class="offset bg-cover-center grayscale">
+    <ui-headline [title]="['recent projects']"></ui-headline>
+    
+    
+    <div class="row center">
+        <div class="small-12 columns">
+            <div class="small-up-1 medium-up-2 large-up-2 center">
+
+                <div 
+                *ngFor="let row of component.list" 
+                class="column column-block">
+                    <figure>
+                        <img src="{{ row.media.url }}" alt="" />
+                        <figcaption>
+                            <div class="vertical-align">
+                                <h4 class="title">{{ row.name }}</h4>
+                                <p>{{ row.description }}</p>
+                                <a class="button text-uppercase snow small" href="{{ row.url }}"  target="_blank">visit project</a>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

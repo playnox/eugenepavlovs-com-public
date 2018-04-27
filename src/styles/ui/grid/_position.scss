@@ -1,0 +1,59 @@
+// reposition a column.
+@mixin grid-column-position($position) {
+    @if type-of($position) == 'number' {
+        $offset: percentage($position / $grid-column-count);
+        position: relative;
+        #{$global-left}: $offset;
+    }
+    @else if $position == center {
+        &, &:last-child:not(:first-child) {
+          float: none;
+          clear: both;
+        }
+        @include margin-h(auto);
+        // margin-right: auto;
+        // margin-left: auto;
+    }
+    @else {
+        @warn 'Wrong syntax for grid-column-position(). Enter a positive or negative number, or center.';
+    }
+}
+
+
+// reset a position definition.
+@mixin grid-column-unposition {
+    @include margin-h(0);
+    position: static;
+    float: left;
+    // margin-right: 0;
+    // margin-left: 0;
+}
+
+
+// offsets a column to the right by $n columns.
+@mixin grid-column-offset($n) {
+    margin-#{$global-left}: grid-column($n);
+}
+
+
+// disable the default behavior of the last column in a row aligning to the opposite edge.
+@mixin grid-column-end {
+    &:last-child:last-child {
+        float: $global-left;
+    }
+}
+
+
+// quick access
+@mixin grid-col-pos($position) {
+    @include grid-column-position($position);
+}
+@mixin grid-col-unpos {
+    @include grid-column-unposition;
+}
+@mixin grid-col-off($n) {
+    @include grid-column-offset($n);
+}
+@mixin grid-col-end {
+    @include grid-column-end;
+}

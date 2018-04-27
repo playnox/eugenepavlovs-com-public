@@ -1,0 +1,380 @@
+{
+    "ver": "0.0.14",
+    "id": "BrowserLocalStorageConflictIdentifier",
+    "components": {
+
+
+        "nav": {
+            "name": "navigation",
+            "list": [
+                {
+                    "name": "about",
+                    "url": "about",
+                    "icon": "icon-home"
+                },
+                {
+                    "name": "projects",
+                    "url": "projects",
+                    "icon": "icon-home"
+                },
+                {
+                    "name": "experience",
+                    "url": "experience",
+                    "icon": "icon-home"
+                },
+                {
+                    "name": "skills",
+                    "url": "skills",
+                    "icon": "icon-home"
+                }
+            ]
+        },
+
+
+
+        "screen": {
+            "name": "screen",
+            "title": "eugene pavlovs",
+            "media": [
+                {
+                    "name": "mp4",
+                    "url": "assets/videos/video.mp4"
+                },
+                {
+                    "name": "webm",
+                    "url": "assets/videos/video.webm"
+                }
+            ],
+            "content": "full stack web developer / cto"
+        },
+
+
+
+        "about": {
+            "name": "about",
+            "title": "about me",
+            "media": {
+                "url": "assets/images/me.jpg"
+            },
+            "contact": {
+                "city": "Los Angeles",
+                "state": "CA",
+                "phone": "310.818.3138",
+                "email": "eugene@noxberry.com"
+            },
+            "content": "<p class=\"wow fadeInUp\">I am a full stack web developer with broad experience in creating logical and innovative solutions to complex tasks. I am an ambitious problem solver with a passion for branding\/marketing and sustainable philanthropy. As someone who takes responsibility for development, I am continually evaluating and upgrading my skills to stay at the cutting edge of web development.<\/p><p class=\"wow fadeInUp\">Throughout multiple years I developed several web applications, reporting tools, couple CMS's with multiple site support, shopping carts, APIs and countless amount of custom webpages. I am constantly looking for a new challenges, and, hopefully, one day it will make the world a better place.<\/p><p class=\"wow fadeInUp\">If you are looking for a bright, creative and self-motivated web developer with a strong technical background, self-discipline and the ability to work with the minimum of supervision, well - then you found one. I am able to play a key role throughout a site's development to ensure maximum accessibility, customer experience and usability.<\/p><p class=\"wow fadeInUp\"><strong>P.S.<\/strong> I am a good team player and thrive on creating engaging creative solutions while producing detailed technical specifications from client requirements.<\/p>"
+        },
+
+
+
+        "projects": {
+            "name": "projects",
+            "title": "recent projects",
+            "list": [
+                {
+                    "name": "Capzool",
+                    "description": "Ready-to-use posts for social media marketing with scheduler.",
+                    "media": {
+                        "url": "assets/images/projects/capzool.jpg"
+                    },
+                    "url": "https://www.capzool.com",
+                    "active": true
+                },
+                {
+                    "name": "WhaleSlide",
+                    "description": "Colaboration project of an alternative totally private and ad free search engine. P.S browser extension available...",
+                    "media": {
+                        "url": "assets/images/projects/whaleslide.jpg"
+                    },
+                    "url": "https://www.whaleslide.com",
+                    "active": true
+                },
+                {
+                    "name": "oAuthorize.io",
+                    "description": "My solo project, An alternative service to oauth.io and auth0.com to Never build oAuth2 again!",
+                    "media": {
+                        "url": "assets/images/projects/oauthorize.jpg"
+                    },
+                    "url": "http://oauthorize.io",
+                    "active": true
+                },
+                {
+                    "name": "Snappy Response",
+                    "description": "Colaboration project of an automated emailing software that lets you control when emails are sent. Designed for Amazon sellers",
+                    "media": {
+                        "url": "assets/images/projects/snappy-response.jpg"
+                    },
+                    "url": "http://snappyresponse.com",
+                    "active": true
+                },
+                {
+                    "name": "Calspas",
+                    "description": "The new look of CalSpas is on the way, building with my favorite Zurb Foundation.",
+                    "media": {
+                        "url": "assets/images/projects/calspas.jpg"
+                    },
+                    "url": "http://www.calspas.com",
+                    "active": true
+                },
+                {
+                    "name": "CityApp 311",
+                    "description": "Single page website for native Java application, used by couble cities of California.",
+                    "media": {
+                        "url": "assets/images/projects/cityapp311.jpg"
+                    },
+                    "url": "http://www.cityapp311.com",
+                    "active": true
+                },
+                {
+                    "name": "Spy Rivals",
+                    "description": "Closed to public relese: Amazon & eBay market research tool that brings oecommerce to the next level.",
+                    "media": {
+                        "url": "assets/images/projects/spy-rivals.jpg"
+                    },
+                    "url": "http://app3.spyrivals.com",
+                    "active": true
+                },
+                {
+                    "name": "Explore Butte County",
+                    "description": "Another group project, Yes! it's a WP site - I'm not a big fan of WordPress neither. When group say jump you...",
+                    "media": {
+                        "url": "assets/images/projects/butte-county.jpg"
+                    },
+                    "url": "https://www.explorebuttecounty.com",
+                    "active": true
+                },
+                {
+                    "name": "Skinny Bikini",
+                    "description": "Had my dirty hads on one of those <strong>Shopify</strong> themes once, turned out to be easy going...",
+                    "media": {
+                        "url": "assets/images/projects/skinny-bikini.jpg"
+                    },
+                    "url": "https://www.skinnybikini.com",
+                    "active": false
+                },
+                {
+                    "name": "Deluxe Movers",
+                    "description": "Single page website for local Orange County moving company.",
+                    "media": {
+                        "url": "assets/images/projects/deluxe-movers.jpg"
+                    },
+                    "url": "https://www.deluxemovers.com",
+                    "active": false
+                },
+                {
+                    "name": "Prime Master Inc.",
+                    "description": "One of the oldest applience repair providers in Los Angeles.",
+                    "media": {
+                        "url": "assets/images/projects/primemaster.jpg"
+                    },
+                    "url": "https://www.primemasterinc.com",
+                    "active": false
+                }
+            ]
+        },
+
+
+        "experience": {
+            "name": "experience",
+            "title": "work experience",
+            "list": [
+                {
+                    "id": "81203",
+                    "name": "Capzool",
+                    "position": "CTO / Lead team developer",
+                    "status": "current",
+                    "period": {
+                        "from": "2017-08-11T00:00:00Z",
+                        "to": null
+                    },
+                    "description": "A social media marketing platform with Ready-to-use posts for social media marketing... Schedule & publish your content to multiple platforms simultaneously with a powerful calendar featuring drag and drop functionality.",
+                    "tags": [
+                        "TypeScript",
+                        "Angular 4",
+                        "oAuth2",
+                        "RxJs",
+                        "REST",
+                        "Phalcon",
+                        "PHP",
+                        "MySQL",
+                        "SCSS",
+                        "HTML",
+                        "Git"
+                    ],
+                    "url": "https://capzool.com",
+                    "active": true
+                },
+                {
+                    "id": "18901",
+                    "name": "Whaleslide",
+                    "position": "Lead team developer",
+                    "status": "consulting",
+                    "period": {
+                        "from": "2017-02-11T00:00:00Z",
+                        "to": null
+                    },
+                    "description": "A brand new, totally private search engine. Raise money for charity when you shop online. Collect, discover and share the content that inspires you. This is a search experience like no other.",
+                    "tags": [
+                        "REST",
+                        "Lumen",
+                        "PHP",
+                        "HTML",
+                        "TypeScript",
+                        "MySQL",
+                        "MONGO",
+                        "Git",
+                        "SCSS",
+                        "oAuth2",
+                        "Angular 2",
+                        "RxJs"
+                    ],
+                    "url": "https://whaleslide.com",
+                    "active": true
+                },
+                {
+                    "id": "17890",
+                    "name": "Noxberry",
+                    "position": "Founder",
+                    "status": "current",
+                    "period": {
+                        "from": "2016-01-11T00:00:00Z",
+                        "to": null
+                    },
+                    "description": "After working as a CTO on several major projects I decided to form a small team of highly professional senior developers to share knowledge and keep providing world with better online tools.",
+                    "tags": [
+                        "www"
+                    ],
+                    "url": "http://noxberry.com",
+                    "active": true
+                },
+                {
+                    "id": "16789",
+                    "name": "Cal Spas",
+                    "position": "Full stack",
+                    "status": "complete",
+                    "period": {
+                        "from": "2015-02-11T00:00:00Z",
+                        "to": "2015-08-11T00:00:00Z"
+                    },
+                    "description": "The company speaks for itself. CalSpas is one of the biggest spa/hot-tube manufactures in the US. Due to NDA (contract) I am not allowed to disclose any details of this projects. The job was full of challenges and complex tasks that contribute to a larger understanding and appreciation of web development.",
+                    "tags": [
+                        "REST",
+                        "Laravel",
+                        "PHP",
+                        "HTML",
+                        "JavaScript",
+                        "MySQL",
+                        "MEAN",
+                        "AngularJS",
+                        "oAuth2",
+                        "CSS",
+                        "SEO",
+                        "WordPress",
+                        "ASP.NET"
+                    ],
+                    "url": "http://calspas.com",
+                    "active": true
+                },
+                {
+                    "id": "15678",
+                    "name": "Adam Ginsberg International",
+                    "position": "Full stack",
+                    "status": "complete",
+                    "period": {
+                        "from": "2013-05-11T00:00:00Z",
+                        "to": "2015-06-11T00:00:00Z"
+                    },
+                    "description": "I have spent amazing time around such an energetic and creative person like Adam. Within just a couple years we developed and produced over 10 web applications, 4 public API's, 2 secure payment API's fully integrated with Infusion Soft and lots of other cool stuff...",
+                    "tags": [
+                        "REST",
+                        "NODE.JS",
+                        "PHP",
+                        "HTML",
+                        "JavaScript",
+                        "jQuery",
+                        "CSS",
+                        "MySQL",
+                        "SEO",
+                        "InfusionSoft"
+                    ],
+                    "url": "",
+                    "active": true
+                },
+                {
+                    "id": "14567",
+                    "name": "Speedlings Media",
+                    "position": "Front / Back / IT",
+                    "status": "complete",
+                    "period": {
+                        "from": "2010-08-11T00:00:00Z",
+                        "to": "2013-03-11T00:00:00Z"
+                    },
+                    "description": "The first company who came-up with a concept of turning parked domains into a passive income stream. It was non-stop developing experience: internal tools, affiliate tracking API with CRM integration, custom domain trading floor and limitless amount of sales pages. At Speedlings, I had a great opportunity to work with super sharp and talented graphic designer Cesar Torres, who set my Photoshop skills to a new level. Thanks mate!",
+                    "tags": [
+                        "REST",
+                        "Omnovia",
+                        "PHP",
+                        "HTML",
+                        "JavaScript",
+                        "jQuery",
+                        "CSS",
+                        "MySQL",
+                        "Adobe"
+                    ],
+                    "url": "http://speedlings.com",
+                    "active": true
+                },
+                {
+                    "id": "13456",
+                    "name": "1 Media Works",
+                    "position": "Front end developer",
+                    "status": "complete",
+                    "period": {
+                        "from": "2008-09-11T00:00:00Z",
+                        "to": "2010-07-11T00:00:00Z"
+                    },
+                    "description": "This company took me straight to the world of eCommerce. These guys are the masters of selling anything online. My primary job was to create nice-looking sales page templates integrated with InfusionSoft and update different WP shopping carts. Joomla was another popular solution at that time. Nothing complex, but their marketing strategies were amazing and very well thought-out.",
+                    "tags": [
+                        "Wordpress",
+                        "Joomla",
+                        "PHP",
+                        "HTML",
+                        "JavaScript",
+                        "jQuery",
+                        "CSS",
+                        "SEO",
+                        "Adobe"
+                    ],
+                    "url": "",
+                    "active": false
+                },
+                {
+                    "id": "12345",
+                    "name": "Lineage2 Scryde",
+                    "position": "Front end / Java / Linux",
+                    "status": "complete",
+                    "period": {
+                        "from": "2007-01-11T00:00:00Z",
+                        "to": "2008-08-11T00:00:00Z"
+                    },
+                    "description": "It all started with a fun project of Lineage2 MMORPG private server. Basic LAMP setup with few JAVA plugins...",
+                    "tags": [
+                        "Ubuntu",
+                        "LAMP",
+                        "jython",
+                        "HTML",
+                        "Java",
+                        "PHP",
+                        "MySQL",
+                        "Adobe"
+                    ],
+                    "url": "",
+                    "active": false
+                }
+            ]
+        }
+    },
+    "config": {
+
+    }
+}

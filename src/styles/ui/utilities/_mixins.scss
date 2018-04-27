@@ -1,0 +1,379 @@
+//  triangle
+@mixin css-triangle(
+    $triangle-size,
+    $triangle-color,
+    $triangle-direction
+) {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset $triangle-size;
+    content: '';
+    @if ($triangle-direction == down) {
+        border-bottom-width: 0;
+        border-top-style: solid;
+        border-color: $triangle-color transparent transparent;
+    }
+    @if ($triangle-direction == up) {
+        border-top-width: 0;
+        border-bottom-style: solid;
+        border-color: transparent transparent $triangle-color;
+    }
+    @if ($triangle-direction == right) {
+        border-right-width: 0;
+        border-left-style: solid;
+        border-color: transparent transparent transparent $triangle-color;
+    }
+    @if ($triangle-direction == left) {
+        border-left-width: 0;
+        border-right-style: solid;
+        border-color: transparent $triangle-color transparent transparent;
+    }
+}
+
+
+// menu icon
+@mixin hamburger(
+    $color: get-color(dark),
+    $color-hover: get-color(dark),
+    $width: 20px,
+    $height: 16px,
+    $weight: 2px,
+    $bars: 3
+) {
+    // box-shadow
+    $shadow: ();
+    $hover-shadow: ();
+
+
+    // spacing between bars is calculated based on the total height of the icon and the weight of each bar
+    $spacing: ($height - ($weight * $bars)) / ($bars - 1);
+    @if unit($spacing) == 'px' {
+        $spacing: floor($spacing);
+    }
+    @for $i from 2 through $bars {
+        $offset: ($weight + $spacing) * ($i - 1);
+        $shadow: append($shadow, 0 $offset 0 $color, comma);
+    }
+
+
+    // icon container
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: $width;
+    height: $height;
+    cursor: pointer;
+
+
+    // icon bars
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: $weight;
+        background: $color;
+        box-shadow: $shadow;
+        content: '';    
+    }
+
+
+    // hover state
+    @if $color-hover {
+        @for $i from 2 through $bars {
+            $offset: ($weight + $spacing) * ($i - 1);
+            $hover-shadow: append($hover-shadow, 0 $offset 0 $color-hover, comma);
+        }
+        &:hover::after {
+            background: $color-hover;
+            box-shadow: $hover-shadow;
+        }
+    }
+}
+
+
+// adds a downward-facing triangle as a background image to an element.
+@mixin background-triangle($color: get-color(dark)) {
+    $rgb: 'rgb%28#{round(red($color))}, #{round(green($color))}, #{round(blue($color))}%29';
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #{$rgb}'></polygon></svg>");
+
+
+    @media screen and (min-width:0\0) {
+        @if lightness($color) < 60% {
+            
+
+            // white triangle
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
+        }
+        @else {
+            
+
+            // black triangle
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
+        }
+    }
+}
+
+
+// applies the micro clearfix hack popularized by Nicolas Gallagher.
+@mixin clearfix {
+    &::before,
+    &::after {
+        display: table;
+        content: ' ';
+
+        @if $global-flexbox {
+            flex-basis: 0;
+            order: 1;
+        }
+    }
+    &::after {
+        clear: both;
+    }
+}
+
+
+// adds CSS for a "quantity query" selector that automatically sizes elements based on how many there are inside a container.
+@mixin auto-width($max, $elem: li) {
+    @for $i from 2 through $max {
+        &:nth-last-child(#{$i}):first-child,
+        &:nth-last-child(#{$i}):first-child ~ #{$elem} {
+            width: percentage(1 / $i);
+        }
+    }
+}
+
+
+// removes the focus ring around an element when a mouse input is detected.
+@mixin disable-mouse-outline {
+    [data-whatinput='mouse'] & {
+        outline: 0;
+    }
+}
+
+
+// Makes an element visually hidden, but still accessible to keyboards and assistive devices.
+@mixin element-invisible {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+
+// reverses the CSS output created by the element-invisible() mixin.
+@mixin element-invisible-off {
+    position: static !important;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+}
+
+
+// screen
+@mixin screen {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+// vertically centers as relative
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+// vertically centers the element inside of its first non-static parent
+@mixin vertical-center {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+// horizontally centers the element inside of its first non-static parent
+@mixin horizontal-center {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+
+// absolutely centers the element inside of its first non-static parent
+@mixin absolute-center {
+    @include translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+
+// iterates through breakpoints defined in $breakpoint-classes and prints the CSS inside the mixin at each breakpoint's media query.
+@mixin each-breakpoint($small: true) {
+    $list: $breakpoint-classes;
+    @if not $small {
+        $list: sl-remove($list, $zero-breakpoint);
+    }
+    @each $name in $list {
+        $size: $name !global;
+        @include breakpoint($name) {
+            @content;
+        }
+    }
+}
+
+
+// generate the @content passed to the mixin with a value
+@mixin breakpoint-value(
+    $name: auto,
+    $map: null
+) {
+    @if $name == auto and type-of($map) == 'map' {
+        
+
+        // auto
+        @each $k, $v in $map {
+            @include breakpoint($k) {
+                @include breakpoint-value($v, $map) {
+                    @content;
+                }
+            }
+        }
+    }
+    @else {
+
+
+        // breakpoint name
+        @if type-of($name) == 'string' {
+            $name: get-bp-val($map, $name);
+        }
+
+
+        // breakpoint value
+        $bp-value: $name !global;
+        @content;
+    }
+}
+@mixin box-sizing($value) {
+    -webkit-box-sizing: $value;
+    -moz-box-sizing: $value;
+    box-sizing: $value;
+}
+@mixin padding($size) {
+    padding-left: $size;
+    padding-right: $size;
+    padding-top: $size;
+    padding-bottom: $size;
+}
+@mixin padding-h($size) {
+    padding-left: $size;
+    padding-right: $size;
+}
+@mixin padding-v($size) {
+    padding-top: $size;
+    padding-bottom: $size;
+}
+@mixin margin($size) {
+    margin-left: $size;
+    margin-right: $size;
+    margin-top: $size;
+    margin-bottom: $size;
+}
+@mixin margin-h($size) {
+    margin-left: $size;
+    margin-right: $size;
+}
+@mixin margin-v($size) {
+    margin-top: $size;
+    margin-bottom: $size;
+}
+@mixin translate($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -moz-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
+@mixin transition($transition) {
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
+}
+@mixin placeholder-color($color) {
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
+    &:-moz-placeholder {
+       color: $color;  
+    }
+    &::-moz-placeholder {
+       color: $color;  
+    }
+    &:-ms-input-placeholder {  
+       color: $color;  
+    }
+}
+@mixin grayscale($value) {
+    -webkit-filter: grayscale($value);
+    -moz-filter: grayscale($value);
+    filter: grayscale($value);
+}
+@mixin flex-wrap($value) {
+    -webkit-flex-wrap: $value;
+    -ms-flex-wrap: $value;
+    flex-wrap: $value;
+}
+@mixin flex-flow($value) {
+    -webkit-flex-flow: $value;
+    -ms-flex-flow: $value;
+    flex-flow: $value;
+}
+@mixin flex-value($value) {
+    -webkit-flex: $value;
+    -ms-flex: $value;
+    flex: $value;
+}
+@mixin align-items($value) {
+    -webkit-align-items: $value;
+    -ms-flex-align: $value;
+    align-items: $value;
+}
+@mixin box-align($value) {
+    box-align: $value;
+    -ms-box-align: $value;
+    -webkit-box-align: $value;
+}
+@mixin rotate($deg) {
+    transform: rotate($deg);
+    -webkit-transform: rotate($deg);
+    -moz-transform: rotate($deg);
+    -o-transform: rotate($deg);
+    -ms-transform: rotate($deg);
+}
+@mixin bg-cover {
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+}

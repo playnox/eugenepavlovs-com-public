@@ -1,0 +1,284 @@
+// creates a container for a flex grid row.
+@mixin flex-grid-row(
+    $behavior: null,
+    $size: $grid-row-width,
+    $columns: null,
+    $base: true,
+    $wrap: true,
+    $gutters: $grid-column-gutter
+) {
+    $margin: auto;
+    $wrap: if($wrap, wrap, nowrap);
+    @if index($behavior, nest) != null {
+        @include grid-row-nest($gutters);
+        @if index($behavior, collapse) != null {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    }
+    @else {
+        @include grid-row-size($size);
+        margin-right: auto;
+        margin-left: auto;
+    }
+    @if $base {
+        display: flex;
+        flex-flow: row $wrap;
+    }
+    @if $columns != null {
+        @include grid-context($columns, $base) {
+            @content;
+        }
+    }
+}
+
+
+// calculates the flex property for a flex grid column.
+@function flex-grid-column($columns: expand) {
+    $flex: 1 1 0px; // sass-lint:disable-line zero-unit
+    @if $columns == shrink {
+        $flex: 0 0 auto;
+    }
+    @else if $columns != expand {
+        $flex: 0 0 grid-column($columns);
+    }
+    @return $flex;
+}
+
+
+// creates a column for a flex grid.
+@mixin flex-grid-column(
+    $columns: expand,
+    $gutters: $grid-column-gutter
+) {
+    @include flex-grid-size($columns);
+    @include grid-column-gutter($gutters: $gutters);
+
+
+    // fixes recent Chrome version not limiting child width
+    // https://stackoverflow.com/questions/34934586/white-space-nowrap-and-flexbox-did-not-work-in-chrome
+    @if $columns == expand {
+        min-width: initial;
+    }
+
+
+    // max-width fixes IE 10/11 not respecting the flex-basis property
+    @if $columns != expand and $columns != shrink {
+        max-width: grid-column($columns);
+    }
+}
+
+
+// creates a block grid for a flex grid row.
+@mixin flex-grid-layout(
+    $n,
+    $selector: '.column'
+) {
+    flex-wrap: wrap;
+    > #{$selector} {
+        $pct: percentage(1/$n);
+        flex: 0 0 $pct;
+        max-width: $pct;
+    }
+}
+
+
+// changes the width flex grid column.
+@mixin flex-grid-size($columns: null) {
+    $columns: $columns or expand;
+    flex: flex-grid-column($columns);
+
+
+    // max-width fixes IE 10/11 not respecting the flex-basis property
+    @if $columns != expand and $columns != shrink {
+        max-width: grid-column($columns);
+    }
+}
+
+
+@mixin ui-flex-grid {
+    
+
+    // row
+    .row {
+        @include flex-grid-row;
+
+
+        // nesting behavior
+        & .row {
+            @include flex-grid-row(nest, $base: false);
+            &.collapse {
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+
+
+        // expanded row
+        &.expanded {
+            @include grid-row-size(expand); 
+            .row {
+                margin-right: auto;
+                margin-left: auto;
+            }
+        }
+        &:not(.expanded) .row {
+            @include grid-row-size(expand);
+        }
+        &.collapse {
+            > .column {
+                @include grid-col-collapse;
+            }
+        }
+
+
+        // undo negative margins from collapsed child
+        &.is-collapse-child,
+        &.collapse > .column > .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    }
+
+
+    // column
+    .column {
+        @include flex-grid-column;
+    }
+
+
+    // column row
+    .column.row.row {
+        float: none;
+        display: block;
+    }
+
+
+    // to properly nest a column row, padding and margin is removed
+    .row .column.row.row {
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .flex-container {
+        @include flex;
+    }
+    .flex-child-auto {
+        flex: 1 1 auto;
+    }
+    .flex-child-grow {
+        flex: 1 0 auto;
+    }
+    .flex-child-shrink {
+        flex: 0 1 auto;
+    }
+
+
+    @each $dir, $prop in $flex-direction {
+        .flex-dir-#{$dir} {
+            @include flex-direction($prop);
+        }
+    }
+    @include each-breakpoint {
+        @for $i from 1 through $grid-column-count {
+          
+
+            // sizing (percentage)
+            .#{$size}-#{$i} {
+                flex: flex-grid-column($i);
+                max-width: grid-column($i);
+            }
+
+            // offsets
+            $o: $i - 1;
+            .#{$size}-offset-#{$o} {
+                @include grid-column-offset($o);
+            }
+        } 
+
+
+        // source ordering
+        @for $i from 1 through 6 {
+            .#{$size}-order-#{$i} {
+                @include flex-order($i);
+            }
+        }
+
+
+        // Block grid
+        @for $i from 1 through $block-grid-max {
+            .#{$size}-up-#{$i} {
+              @include flex-grid-layout($i);
+            }
+        }
+
+
+        @if $size != $zero-breakpoint {
+            
+
+            // sizing (expand)
+            @include breakpoint($size) {
+                .#{$size}-expand {
+                    flex: flex-grid-column();
+                }
+            }
+
+            
+            // direction helper classes
+            @each $dir, $prop in $flex-direction {
+                .#{$size}-flex-dir-#{$dir} {
+                    @include flex-direction($prop);
+                }
+            }
+            
+
+            // child helper classes
+            .#{$size}-flex-child-auto {
+                flex: 1 1 auto;
+            }
+            .#{$size}-flex-child-grow {
+                flex: 1 0 auto;
+            }
+            .#{$size}-flex-child-shrink {
+                flex: 0 1 auto;
+            }
+
+
+            // Auto-stacking/unstacking
+            @at-root (without: media) {
+                .row.#{$size}-unstack {
+                    > .column {
+                        flex: flex-grid-column(100%);
+                        @include breakpoint($size) {
+                          flex: flex-grid-column();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // responsive collapsing
+        .#{$size}-collapse {
+            > .column { @include grid-col-collapse; }
+        }
+
+        .#{$size}-uncollapse {
+            > .column { @include grid-col-gutter($size); }
+        }
+    }
+
+
+    // sizing (shrink)
+    .shrink {
+        flex: flex-grid-column(shrink);
+        max-width: 100%;
+    }
+    .column-block {
+        @include grid-column-margin;
+    }
+    .columns {
+        @extend .column; // sass-lint:disable-line placeholder-in-extend
+    }
+}

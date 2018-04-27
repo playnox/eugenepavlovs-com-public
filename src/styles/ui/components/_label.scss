@@ -1,0 +1,35 @@
+$label-background: get-color(primary) !default;
+$label-color: get-color(snow) !default;
+$label-color-alt: get-color(dark) !default;
+$label-palette: $color-palette !default;
+$label-font-size: 0.8rem !default;
+$label-padding: 0.33333rem 0.5rem !default;
+$label-radius: $global-radius !default;
+
+
+// generates base styles for a label.
+@mixin label {
+    display: inline-block;
+    padding: $label-padding;
+    border-radius: $label-radius;
+    font-size: $label-font-size;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: default;
+}
+
+
+// export
+@mixin ui-label {
+    .label {
+        @include label;
+        background: $label-background;
+        color: $label-color;
+        @each $name, $color in $label-palette {
+            &.#{$name} {
+                background: $color;
+                color: color-pick-contrast($color, ($label-color, $label-color-alt));
+            }
+        }
+    }
+}

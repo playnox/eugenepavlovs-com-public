@@ -1,0 +1,88 @@
+$fab-sizes: (
+    tiny: 1.5rem,
+    small: 2rem,
+    default: 2.5rem,
+    large: 3.25rem,
+    xlarge: 4rem,
+    hero: 7rem,
+) !default;
+$fab-background: get-color(snow) !default;
+$fab-shadow: 0px 1px 4px rgba(0,0,0, 0.4) !default;
+$fab-color-alt: get-color(dark) !default;
+
+
+
+// generates the base styles for a fab.
+@mixin fab {
+    @include box-sizing(border-box);
+    @extend .center;
+    @extend .padding-none;
+    display: inline-block;
+    line-height: 0;
+    letter-spacing: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: (2.5rem / 2.25);
+    position: relative;
+    background-color: $fab-background;
+    box-shadow: $fab-shadow;
+    > * {
+        @include box-sizing(border-box);
+        @include absolute-center;
+        line-height: 0;
+    }
+}
+
+
+@mixin ui-fab() {
+    .fab {
+        @include fab;
+        
+    
+        // default bordered / hollow
+        &.bordered,
+        &.hollow {
+            border-style: solid;
+            border-width: 1px;
+            &.small,
+            &.tiny {
+                border-width: 1px;
+            }
+        }
+
+
+        // adds colors
+        @each $name, $color in $color-palette {
+            &.#{$name} {
+                background-color: $color;
+                color: color-pick-contrast($color, (get-color(snow), $fab-color-alt));
+                &.hollow {
+                    border-color: $color;
+                    > * {
+                        color: $color;
+                    }
+                }
+            }
+        }
+
+
+        // adds size classes
+        @each $name, $size in $fab-sizes {
+            &.#{$name} {
+                width: $size;
+                height: $size;
+                font-size: $size / 2.25;
+            }
+        } 
+
+
+        // sets transparent bg for hollow
+        &.naked,
+        &.hollow {
+            background-color: transparent;
+        }
+        &.naked {
+            border: none;
+        }
+    }
+}

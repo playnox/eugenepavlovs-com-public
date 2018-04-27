@@ -1,0 +1,6 @@
+@mixin ui-headline {
+    .headline {
+        margin-bottom: 0;
+        color: get-color(primary);
+    }        
+}

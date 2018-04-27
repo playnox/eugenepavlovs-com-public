@@ -1,0 +1,106 @@
+/* Projects */
+#projects {
+    figure {
+        figcaption {
+            background: rgba(165,131,197, 0.9);
+            color: get-color(snow);
+            
+            .title {
+                color: get-color(snow);
+            }
+        }
+    }
+}
+
+
+/* Timeline */
+#timeline {
+    background-image: url(/assets/images/bg-timeline.jpg);
+    background-position: center bottom;
+    .timeline-container {
+        &:before {
+            background: rgba(get-color(primary), 0.65);
+        }
+        .title span {
+            color: get-color(snow);
+        }
+        .timeline-credentials {
+            color: get-color(primary);
+            i {
+                color: get-color(snow);
+            }
+        }
+    }
+    .timeline-img,
+    .timeline-period {
+        background-color: get-color(primary);
+    }
+    .timeline-img {
+        i {
+            color: get-color(snow);
+        }
+    }
+    .timeline-period {
+        .from {
+            border-bottom:solid 1px rgba(get-color(primary), 0.65);
+            .month {
+                color: get-color(snow);
+            }
+        }
+        
+
+        color: get-color(snow);
+    }
+    p,
+    li {
+        color: get-color(snow);
+    }
+}
+
+
+
+/* Skills */
+#skills {
+    table .text-right i:not(.active) {
+        color: get-color(fade);
+    }
+    table tr:hover .text-right i.active {
+        color: get-color(dark);
+    }
+}
+
+
+
+#quote {
+    background-color: get-color(dark);
+    > * {
+        color: get-color(secondary);
+    }
+}
+
+
+
+/* Footer */
+footer {
+    background-color: get-color(dark);
+    > *,
+    .title,
+    h1,
+    h4,
+    p {
+        color: get-color(secondary);
+    }
+    svg {
+        fill: get-color(secondary);
+    }
+}
+
+
+
+/* Copyrights */
+.copyrights {
+    background-color: get-color(secondary);
+    p {
+        color: get-color(primary);
+    }
+}

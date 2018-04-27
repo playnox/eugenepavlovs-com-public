@@ -1,0 +1,29 @@
+<section id="timeline" class="offset bg-cover grayscale">
+    <ui-headline [title]="component.title"></ui-headline>
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="timeline-container">
+
+                <div *ngFor="let row of component.list" class="timeline-block">
+                    <ul class="timeline-period center">
+                        <li class="from">
+                            <h4 class="month">{{ row.period.from | date: 'MMM' }}</h4>
+                            <span class="year">{{ row.period.from | date: 'yyyy' }}</span>
+                        </li>
+                        <li class="to">
+                            <span *ngIf="row.period.to">{{ row.period.to | date: 'MMM, yyyy' }}</span>
+                            <span *ngIf="!row.period.to" class="text-capitalize">{{ row.status }}</span>
+                        </li>
+                    </ul>
+                    <div class="timeline-content">
+                        <h4 class="title">{{ row.position }} @ <span class="wow fadeInRight">{{ row.name }}</span></h4>
+                        <p>{{ row.description }}</p>
+                        <p>
+                            <span *ngFor="let tag of row.tags" class="label">{{ tag }}</span> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

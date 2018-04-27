@@ -1,0 +1,47 @@
+@mixin grid-column-gutter(
+    $gutter: auto,
+    $gutters: $grid-column-gutter
+) {
+    @include breakpoint-value($gutter, $gutters) {
+        $padding: rem-calc($bp-value) / 2;
+        padding-right: $padding;
+        padding-left: $padding;
+    }
+}
+
+
+// collapse the gutters on a column by removing the padding.
+@mixin grid-column-collapse {
+    @include grid-column-gutter(0);
+}
+
+
+// shorthand for grid-column-gutter().
+@mixin grid-col-gutter(
+    $gutter: auto,
+    $gutters: $grid-column-gutter
+) {
+    @include grid-column-gutter($gutter, $gutters);
+}
+
+
+// shorthand for grid-column-collapse()
+@mixin grid-col-collapse {
+    @include grid-column-collapse;
+}
+
+
+// sets bottom margin on grid columns to match gutters
+@mixin grid-column-margin (
+    $margin: auto,
+    $margins: $grid-column-gutter
+) {
+    @include breakpoint-value($margin, $margins) {
+        $margin-bottom: rem-calc($bp-value);
+        margin-bottom: $margin-bottom;
+
+        > :last-child {
+          margin-bottom: 0;
+        }
+    }
+}

@@ -1,0 +1,280 @@
+/**
+ * 1. Global
+ * 2. Breakpoints
+ * 3. The Grid
+ * 4. Base Typography
+ * 5. Typography Helpers
+ * 7. Fab
+ * 11. Button
+ * 20. Label
+ * 22. Menu
+ * 32. Table
+ * 38. Topbar
+ * 
+ * 
+ */
+
+
+
+// utilities
+@import 'ui/utilities/utilities';
+
+
+
+// 1. Global
+$global-font-size: 100%;
+$global-width: rem-calc(1200);
+$global-lineheight: 1.5;
+$global-margin: 1rem;
+$global-padding: 1rem;
+$global-text-direction: ltr;
+$global-flexbox: false;
+$print-transparent-backgrounds: true;
+$body-antialiased: true;
+$color-palette: (
+    primary: #ac8fd8,
+    snow: rgb(255, 255, 255),
+    fade: rgb(240, 240, 240),
+    secondary: #e1c5fb,
+    text: #777777,
+    dark: #3c3951,
+    success: #67ac41,
+    warning: #eb884c,
+    alert: #da6a6a,
+    accent: #c088ef
+);
+$bg-color-opacity: 0.75;
+$body-background: get-color(snow);
+$body-font-color: get-color(text);
+$body-font-family: 'Source Sans Pro', sans-serif;
+$global-weight-normal: normal;
+$global-weight-bold: 600;
+$global-radius: 0.25rem;
+
+
+
+
+// 2. Breakpoints
+$breakpoints: (
+    small: 0,
+    medium: 720px,
+    large: 1024px,
+    xlarge: 1280px,
+    xxlarge: 1440px,
+);
+$print-breakpoint: large;
+$breakpoint-classes: (small medium large);
+
+
+
+// 3. The Grid
+$grid-row-width: $global-width;
+$grid-column-count: 12;
+$grid-column-gutter: (
+    small: 1rem,
+    medium: 1.25rem,
+    large: 1.5rem,
+    xlarge: 1.75rem,
+);
+$grid-column-align-edge: true;
+$block-grid-max: 8;
+$masonry-css-column-gap: $global-margin;
+
+
+
+// 4. Base Typography
+$header-font-family: $body-font-family;
+$header-font-weight: $global-weight-normal;
+$header-font-style: normal;
+$font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
+$title-font-family: 'Oswald', sans-serif; //'Roboto', sans-serif; //
+$handwritten-font-family: 'Nothing You Could Do', cursive;
+$header-color: inherit;
+$header-lineheight: 1.4;
+$header-margin-bottom: 0.5rem;
+$global-font-sizes: (
+    tiny: 0.65rem,
+    small: 0.85rem,
+    default: 1rem,
+    large: 1.25rem,
+    xlarge: 1.75rem,
+    hero: 2.5rem
+);
+$header-styles: (
+    small: (
+        'h1': ('font-size': 32),
+        'h2': ('font-size': 38),
+        'h3': ('font-size': 24),
+        'h4': ('font-size': 20),
+        'h5': ('font-size': 16),
+        'h6': ('font-size': 12)
+    ),
+    medium: (
+        'h1': ('font-size': 36),
+        'h2': ('font-size': 32),
+        'h3': ('font-size': 28),
+        'h4': ('font-size': 24),
+        'h5': ('font-size': 20),
+        'h6': ('font-size': 16)
+    ),
+);
+$header-text-rendering: optimizeLegibility;
+$small-font-size: 0.75rem; // 80%;
+$header-small-font-color: get-color(text);
+$paragraph-lineheight: 1.6;
+$paragraph-margin-bottom: 1rem;
+$paragraph-text-rendering: optimizeLegibility;
+$paragraph-font-weight: 300;
+$code-color: get-color(dark);
+$code-font-family: $font-family-monospace;
+$code-font-weight: $global-weight-normal;
+$code-background: get-color(fade);
+$code-border: 1px solid get-color(text);
+$code-padding: rem-calc(2 5 1);
+$anchor-color: get-color(primary);
+$anchor-color-hover: scale-color($anchor-color, $lightness: -14%);
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
+$hr-width: $global-width;
+$hr-border: 1px solid get-color(fade);
+$hr-margin: 1rem auto;
+$list-lineheight: $paragraph-lineheight;
+$list-margin-bottom: $paragraph-margin-bottom;
+$list-style-type: disc;
+$list-style-position: outside;
+$list-side-margin: 1.25rem;
+$list-nested-side-margin: 1.25rem;
+$defnlist-margin-bottom: 1rem;
+$defnlist-term-weight: $global-weight-bold;
+$defnlist-term-margin-bottom: 0.3rem;
+$blockquote-color: get-color(text);
+$blockquote-padding: rem-calc(9 20 0 19);
+$blockquote-border: 1px solid get-color(text);
+$cite-font-size: 0.85rem;
+$cite-color: get-color(text);
+$cite-pseudo-content: '\2014 \0020';
+$keystroke-font: $font-family-monospace;
+$keystroke-color: get-color(dark);
+$keystroke-background: get-color(fade);
+$keystroke-padding: rem-calc(2 4 0);
+$keystroke-radius: $global-radius;
+$abbr-underline: 1px dotted get-color(dark);
+
+
+
+// 5. Typography Helpers
+$lead-font-size: $global-font-size * 1.25;
+$lead-lineheight: 1.6;
+$subheader-lineheight: 1.4;
+$subheader-color: get-color(text);
+$subheader-font-weight: $global-weight-normal;
+$subheader-margin-top: 0.2rem;
+$subheader-margin-bottom: 0.5rem;
+$stat-font-size: 2.5rem;
+
+
+
+// 7. Fab
+$fab-sizes: (
+    tiny: 1.5rem,
+    small: 2rem,
+    default: 2.5rem,
+    large: 3.25rem,
+    xlarge: 4.5rem,
+    hero: 7rem
+);
+$fab-background: get-color(snow);
+$fab-shadow: 0; // 0px 1px 4px rgba(0,0,0, 0.4);
+$fab-color-alt: get-color(dark);
+
+
+
+// 11. Button
+$button-margin: 0 0 $global-margin 0;
+$button-fill: solid;
+$button-background: get-color(primary);
+$button-background-hover: scale-color($button-background, $lightness: -15%);
+$button-color: get-color(snow);
+$button-color-alt: get-color(dark);
+$button-radius: 0; // $global-radius;
+$button-fonts: (
+    tiny: 0.5rem, // 8px
+    small: 0.625rem, // 10px
+    default: 0.75rem, // 12px
+    large:  1rem, // 16px
+    xlarge: 1.25rem // 20px
+);
+$button-sizes: (
+    tiny: 1.5rem, // 24px
+    small: 2rem, // 32px
+    default: 2.5rem, // 40px
+    large: 3.25rem, // 52px
+    xlarge: 4.5rem, // 72px
+);
+$button-palette: $color-palette;
+$button-opacity-disabled: 0.25;
+$button-background-hover-lightness: -10%;
+$button-hollow-hover-lightness: -50%;
+$button-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+$button-font-family: $body-font-family;
+$button-font-weight: bold;
+$button-shadow: none; // 0px 1px 4px rgba(0,0,0, 0.1);
+$button-shadow-hover: none; // 0px 1px 3px rgba(0,0,0, 0.01);
+$button-letter-spacing: 0.1rem;
+
+
+
+// 20. Label
+$label-background: get-color(primary);
+$label-color: get-color(snow);
+$label-color-alt: get-color(text);
+$label-palette: $color-palette;
+$label-font-size: 0.8rem;
+$label-padding: 0.33333rem 0.5rem;
+$label-radius: $global-radius;
+
+
+
+// 22. Menu
+$menu-margin: 0;
+$menu-margin-nested: 1rem;
+$menu-item-padding: 0.7rem 1rem;
+$menu-item-color-active: get-color(snow);
+$menu-item-background-active: get-color(fade);
+$menu-icon-spacing: 0.25rem;
+$menu-item-background-hover: get-color(fade);
+$menu-border: get-color(fade);
+
+
+
+// 32. Table
+$table-background: get-color(snow);
+$table-color-scale: 5%;
+$table-border: none; // 1px solid smart-scale($table-background, $table-color-scale);
+$table-padding: rem-calc(8 10 10);
+$table-hover-scale: 2%;
+$table-row-hover: darken($table-background, $table-hover-scale);
+$table-row-stripe-hover: darken($table-background, $table-color-scale + $table-hover-scale);
+$table-is-striped: true;
+$table-striped-background: transparent; // smart-scale($table-background, $table-color-scale);
+$table-stripe: even;
+$table-head-background: smart-scale($table-background, $table-color-scale / 2);
+$table-head-row-hover: darken($table-head-background, $table-hover-scale);
+$table-foot-background: smart-scale($table-background, $table-color-scale);
+$table-foot-row-hover: darken($table-foot-background, $table-hover-scale);
+$table-head-font-color: $body-font-color;
+$table-foot-font-color: $body-font-color;
+$show-header-for-stacked: false;
+
+
+
+// 38. Topbar (custom)
+$topbar-padding: 0;
+$topbar-background: #FFF ;
+$topbar-unstack-breakpoint: medium ;
+$topbar-sizes: (
+	tiny: 2rem,
+	small: 3rem,
+	default: 4rem,
+	large: 5rem,
+);

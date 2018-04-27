@@ -1,0 +1,99 @@
+@charset 'utf-8';
+
+
+
+@import 'config';
+@import 'ui/ui';
+
+
+@include get-colors;
+@include global-styles;
+@include ui-visibility-classes;
+@include ui-float-classes;
+@include ui-grid;
+@include ui-typography;
+@include ui-button;
+@include ui-fab;
+@include ui-menu;
+@include ui-headline;
+@include ui-label;
+@include ui-sticky;
+@include ui-table;
+@include ui-topbar;
+@include ui-timeline;
+
+
+
+
+
+
+/** flag icons */
+@import 'ui/flag-icon/flag-icon';
+
+
+/** animations */
+@import 'animations/delay';
+
+
+/** theme */
+@import 'themes/default';
+
+
+
+section {
+    @include padding-h(2rem);
+}
+
+
+#projects {
+    figure {
+        @include margin(0);
+        position: relative;
+        img {
+            position: relative;
+        }
+        &:hover figcaption,
+        .cs-hover figcaption {
+            opacity: 1;
+            transform: translate(1rem, 1rem);
+        }
+        figcaption {
+            @extend .full-width;
+            @extend .full-height;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            padding: 1rem;
+            opacity: 0;
+            backface-visibility: hidden;
+            transition: transform 0.5s, opacity 0.3s;
+            h3 {
+                margin: 0;
+                padding: 0;
+                color: #fff;
+            }
+            span {
+                display: block;
+            }
+            .button {
+                color: get-color(primary);
+            }
+        }
+    }
+}
+
+
+// about
+#about {
+    .my-picture {
+        max-width: 12rem !important;
+        @include breakpoint(medium up) {
+            min-width: 10rem !important;
+        }
+    }
+}
+
+
+

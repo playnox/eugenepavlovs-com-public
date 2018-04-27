@@ -1,0 +1,124 @@
+@import 'math';
+
+
+// checks the luminance of $color.
+@function color-luminance($color) {
+    // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
+    // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+    $rgba: red($color), green($color), blue($color);
+    $rgba2: ();
+    @for $i from 1 through 3 {
+        $rgb: nth($rgba, $i);
+        $rgb: $rgb / 255;
+        $rgb: if($rgb < 0.03928, $rgb / 12.92, pow(($rgb + 0.055) / 1.055, 2.4));
+        $rgba2: append($rgba2, $rgb);
+    }
+    @return 0.2126 * nth($rgba2, 1) + 0.7152 * nth($rgba2, 2) + 0.0722 * nth($rgba2, 3);
+}
+
+
+// checks the contrast ratio of two colors.
+@function color-contrast($color1, $color2) {
+    // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
+    // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+    $luminance1: color-luminance($color1) + 0.05;
+    $luminance2: color-luminance($color2) + 0.05;
+    $ratio: $luminance1 / $luminance2;
+    @if $luminance2 > $luminance1 {
+        $ratio: 1 / $ratio;
+    }
+    $ratio: round($ratio * 10) / 10;
+    @return $ratio;
+}
+
+
+// checks the luminance of $base, and returns the color from $colors (list of colors) that has the most contrast.
+@function color-pick-contrast($base, $colors: (get-color(snow), get-color(dark)), $tolerance: 0) {
+    $contrast: color-contrast($base, nth($colors, 1));
+    $best: nth($colors, 1);
+    @for $i from 2 through length($colors) {
+        $current-contrast: color-contrast($base, nth($colors, $i));
+        @if ($current-contrast - $contrast > $tolerance) {
+            $contrast: color-contrast($base, nth($colors, $i));
+            $best: nth($colors, $i);
+        }
+    }
+    @if ($contrast < 3) {
+        @warn "Contrast ratio of #{$best} on #{$base} is pretty bad, just #{$contrast}";
+    }
+    @return $best;
+}
+
+
+/// Scales a color to be darker if it's light, or lighter if it's dark. Use this function to tint a color appropriate to its lightness.
+///
+/// @param {Color} $color - Color to scale.
+/// @param {Percentage} $scale [5%] - Amount to scale up or down.
+/// @param {Percentage} $threshold [40%] - Threshold of lightness to check against.
+///
+/// @returns {Color} A scaled color.
+@function smart-scale($color, $scale: 5%, $threshold: 40%) {
+  @if lightness($color) > $threshold {
+    $scale: -$scale;
+  }
+  @return scale-color($color, $lightness: $scale);
+}
+
+// get color from color-palette
+@function get-color($key) {
+    @if map-has-key($color-palette, $key) {
+        @return map-get($color-palette, $key);
+    }
+    @else {
+        @error 'given $key is not available in $color-palette';
+    }
+}
+
+// transfers the colors in the $color-palette map into variables, such as get-color(primary).
+@mixin color-vars {
+    @if map-has-key($color-palette, primary) {
+        $color-primary: map-get($color-palette, primary) !global;
+    }
+    @if map-has-key($color-palette, secondary) {
+        $color-secondary: map-get($color-palette, secondary) !global;
+    }
+    @if map-has-key($color-palette, success) {
+        $color-success: map-get($color-palette, success) !global;
+    }
+    @if map-has-key($color-palette, warning) {
+        $color-warning: map-get($color-palette, warning) !global;
+    }
+    @if map-has-key($color-palette, alert) {
+        $color-alert: map-get($color-palette, alert) !global;
+    }
+    @if map-has-key($color-palette, accent) {
+        $color-accent: map-get($color-palette, accent) !global;
+    }
+    @if map-has-key($color-palette, snow) {
+        $color-snow: map-get($color-palette, snow) !global;
+    }
+    @if map-has-key($color-palette, fade) {
+        $color-fade: map-get($color-palette, fade) !global;
+    }
+    @if map-has-key($color-palette, dark) {
+        $color-dark: map-get($color-palette, dark) !global;
+    }
+    @if map-has-key($color-palette, text) {
+        $color-text: map-get($color-palette, text) !global;
+    }
+}
+
+
+@mixin get-colors {
+    // @include color-vars;
+
+    // background / text color classes
+    @each $name, $color in $color-palette {
+        &.text-#{$name} {
+            color: $color;
+        }
+        &.bg-#{$name} {
+            background-color: rgba($color, $bg-color-opacity);
+        }
+    }
+}

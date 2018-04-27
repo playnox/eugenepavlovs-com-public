@@ -1,0 +1,75 @@
+// change the behavior of columns defined inside this mixin to use a different column count.
+@mixin grid-context(
+    $columns,
+    $root: false
+) {
+
+
+    // store the current column count so it can be re-set later
+    $old-grid-column-count: $grid-column-count;
+    $grid-column-count: $columns !global;
+    @if $root {
+        @at-root { @content; }
+    }
+    @else {
+        @content;
+    }
+
+
+    // restore the old column count
+    $grid-column-count: $old-grid-column-count !global;
+}
+
+
+// creates a grid row.
+@mixin grid-row(
+    $columns: null,
+    $behavior: null,
+    $size: $grid-row-width,
+    $cf: true,
+    $gutters: $grid-column-gutter
+) {
+    $margin: auto;
+    @if index($behavior, nest) != null {
+        @include grid-row-nest($gutters);
+        @if index($behavior, collapse) != null {
+            @include margin-h(0);
+            // margin-right: 0;
+            // margin-left: 0;
+        }
+    }
+    @else {
+        @include grid-row-size($size);
+        @include margin-h(auto);
+        // margin-right: auto;
+        // margin-left: auto;
+    }
+    @if $cf {
+        @include clearfix;
+    }
+    @if $columns != null {
+        @include grid-context($columns) {
+            @content;
+        }
+    }
+}
+
+
+// inverts the margins of a row to nest it inside of a column.
+@mixin grid-row-nest($gutters: $grid-column-gutter) {
+    @include each-breakpoint {
+        $margin: rem-calc(get-bp-val($gutters, $size)) / 2 * -1;
+        @include margin-h($margin);
+        // margin-right: $margin;
+        // margin-left: $margin;
+    }
+}
+
+
+// set a grid row size
+@mixin grid-row-size($size: $grid-row-width) {
+    @if $size == expand {
+        $size: none;
+    }
+    max-width: $size;
+}

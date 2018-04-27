@@ -1,0 +1,125 @@
+// hide an element by default, only displaying it above a certain screen size.
+@mixin show-for($size) {
+    $size: map-get($breakpoints, $size);
+    $size: bp-to-em($size) - (1 / 16);
+    @include breakpoint($size down) {
+        display: none !important;
+    }
+}
+
+
+// hide an element by default, only displaying it within a certain breakpoint.
+@mixin show-for-only($size) {
+    $lower-bound-size: map-get($breakpoints, $size);
+    $upper-bound-size: map-next($breakpoints, $size);
+
+
+    // more often than not this will be correct, just one time round the loop it won't so set in scope here
+    $lower-bound: bp-to-em($lower-bound-size) - (1 / 16);
+
+
+    // test actual lower-bound-size, if 0 set it to 0em
+    @if strip-unit($lower-bound-size) == 0 {
+        $lower-bound: bp-to-em($lower-bound-size);
+    }
+    @if $upper-bound-size == null {
+        @media screen and (max-width: $lower-bound) {
+            display: none !important;
+        }
+    }
+    @else {
+        $upper-bound: bp-to-em($upper-bound-size);
+        @media screen and (max-width: $lower-bound), screen and (min-width: $upper-bound) {
+            display: none !important;
+        }
+    }
+}
+
+
+// show an element by default, and hide it above a certain screen size.
+@mixin hide-for($size) {
+    @include breakpoint($size) {
+        display: none !important;
+    }
+}
+
+
+// show an element by default, and hide it above a certain screen size.
+@mixin hide-for-only($size) {
+    @include breakpoint($size only) {
+        display: none !important;
+    }
+}
+
+
+@mixin ui-visibility-classes {
+    
+
+    // basic hiding classes
+    .hide {
+        display: none !important;
+    }
+    .invisible {
+        visibility: hidden;
+    }
+
+
+    // responsive visibility classes
+    @each $size in $breakpoint-classes {
+        @if $size != $zero-breakpoint {
+            .hide-for-#{$size} {
+                @include hide-for($size);
+            }
+            .show-for-#{$size} {
+                @include show-for($size);
+            }
+        }
+        .hide-for-#{$size}-only {
+            @include hide-for-only($size);
+        }
+        .show-for-#{$size}-only {
+            @include show-for-only($size);
+        }
+    }
+
+
+    // screen reader visibility classes
+    .show-for-sr,
+    .show-on-focus {
+        @include element-invisible;
+    }
+
+
+    // only display the element when it's focused
+    .show-on-focus {
+        &:active,
+        &:focus {
+            @include element-invisible-off;
+        }
+    }
+
+
+    // landscape and portrait visibility
+    .show-for-landscape,
+    .hide-for-portrait {
+        display: block !important;
+        @include breakpoint(landscape) {
+            display: block !important;
+        }
+        @include breakpoint(portrait) {
+            display: none !important;
+        }
+    }
+
+
+    .hide-for-landscape,
+    .show-for-portrait {
+        display: none !important;
+        @include breakpoint(landscape) {
+            display: none !important;
+        }
+        @include breakpoint(portrait) {
+            display: block !important;
+        }
+    }
+}

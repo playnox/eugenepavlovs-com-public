@@ -1,0 +1,13 @@
+@import 'base';
+@import 'helpers';
+@import 'alignment';
+@import 'print';
+
+
+// export
+@mixin ui-typography {
+	@include ui-typography-base;
+	@include ui-typography-helpers;
+	@include ui-text-alignment;
+	@include ui-print-styles;
+}

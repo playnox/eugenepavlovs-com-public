@@ -1,0 +1,97 @@
+$lead-font-size: $global-font-size * 1.25 !default;
+$lead-lineheight: 1.6 !default;
+$subheader-lineheight: 1.4 !default;
+$subheader-color: get-color(dark) !default;
+$subheader-font-weight: $global-weight-normal !default;
+$subheader-margin-top: 0.2rem !default;
+$subheader-margin-bottom: 0.5rem !default;
+$stat-font-size: 2.5rem !default;
+$title-font-family: 'Verdana' !default;
+$handwritten-font-family: 'Nothing You Could Do', cursive !default;
+
+// mixin
+@mixin ui-typography-helpers {
+    .text-handwritten {
+        font-family: $handwritten-font-family; // 'Nothing You Could Do', cursive;
+    }
+    .title {
+        font-family: $title-font-family;
+    }
+    .subheader {
+        margin-top: $subheader-margin-top;
+        margin-bottom: $subheader-margin-bottom;
+
+        font-weight: $subheader-font-weight;
+        line-height: $subheader-lineheight;
+        color: $subheader-color;
+    }
+
+
+    // use to style an introductory lead, deck, blurb, etc.
+    .lead {
+        font-size: $lead-font-size;
+        line-height: $lead-lineheight;
+    }
+
+
+    // use to style a large number to display a statistic
+    .stat {
+        font-size: $stat-font-size;
+        line-height: 1;
+        p + & {
+            margin-top: -1rem;
+        }
+    }
+
+
+    // use to remove the bullets from an unordered list
+    .no-bullet {
+        margin-#{$global-left}: 0;
+        list-style: none;
+    }
+
+    
+    // all to uppercase
+    .text-uppercase {
+        text-transform: uppercase;
+    }
+
+    
+    // capitalize
+    .text-capitalize {
+        text-transform: capitalize;
+    }
+
+
+    // underline
+    .text-underline {
+        text-decoration: underline;
+    }
+
+
+    // crossed
+    .text-crossed {
+        text-decoration: line-through;
+    }
+
+
+    .spacing-tiny {
+        letter-spacing: 0.025rem;
+    }
+
+    .spacing-small {
+        letter-spacing: 0.05rem;
+    }
+
+    .spacing-medium {
+        letter-spacing: 0.075rem;
+    }
+
+    .spacing-large {
+        letter-spacing: 0.1rem;
+    }
+
+    .spacing-xlarge {
+        letter-spacing: 0.15rem;
+    }
+}

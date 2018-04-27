@@ -1,0 +1,92 @@
+$topbar-padding: 0.5rem !default;
+$topbar-background: #FFF !default;
+$topbar-unstack-breakpoint: medium !default;
+$topbar-sizes: (
+	tiny: 2rem,
+	small: 3rem,
+	default: 4rem,
+	large: 5rem,
+)!default;
+
+
+// top bar container.
+@mixin topbar-container {
+	@if $global-flexbox {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+	@else {
+		@include clearfix;
+	}
+	padding: $topbar-padding;
+	background-color: $topbar-background;
+	
+}
+
+
+// container sizes
+@mixin topbar-container-sizes {
+	height: map-get($topbar-sizes, default);
+	.menu a:not(.button) {
+		padding: 0;
+		height: map-get($topbar-sizes, default);
+		line-height: map-get($topbar-sizes, default);
+	}
+	@each $size, $value in map-remove($topbar-sizes, default) {
+        &.#{$size} {
+            height: $value;
+			.menu a:not(.button) {
+				height: $value;
+				line-height: $value;
+			}
+        }
+    }
+}
+
+
+@mixin topbar-inner-content {
+	> * {
+		@include vertical-align;
+	}
+}
+
+
+@mixin topbar {
+	.topbar {
+		@include topbar-container;
+		@include topbar-container-sizes;
+		@include topbar-inner-content;
+	}
+}
+
+
+
+
+// export
+@mixin ui-topbar {
+	@include topbar;
+	.topbar {  
+		.menu {
+			> li {
+				background-color: get-color(secondary);
+				> a {
+					@extend .title;
+					@extend .ease;
+					color: get-color(primary);
+				}
+				&:hover {
+					background-color: get-color(primary);
+					> a {
+						color: get-color(snow);
+					}
+				}
+			}
+		}
+
+		&.sticky {
+			z-index: 10;
+		}
+	}
+}

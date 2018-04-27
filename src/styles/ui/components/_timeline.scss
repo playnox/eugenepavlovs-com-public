@@ -1,0 +1,172 @@
+@mixin ui-timeline() {
+
+    
+    .timeline-container {
+        @include margin(0);
+        @include padding-v(3rem);
+        position: relative;
+        &:after {
+
+
+            /* clearfix */
+            content: '';
+            display: table;
+            clear: both;
+        }
+        &:before {
+
+
+            /* this is the vertical line */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.4rem;
+            height: 100%;
+            width: 4px;
+        }
+        .timeline-block {
+            @include margin-v(3rem);
+            position: relative;
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            &:first-child {
+                margin-top: 0;
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }
+            @include breakpoint(large up) {
+                &:first-child {
+                    margin-top: 0;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        @include breakpoint(large up) {
+            &:before {
+                left: 50%;
+                margin-left: -2px;
+            }
+        }
+    }
+    .timeline-img,
+    .timeline-period {
+        @extend .center;
+        position: absolute;
+        left: 0;
+    }
+    .timeline-img {
+        @extend .circle;
+        top: 0;
+        width: 3rem;
+        height: 3rem;
+        padding: 0.5rem;
+        overflow: hidden;
+        i {
+            @extend .text-large;
+        }
+        @include breakpoint(large up) {
+            left: 50%;
+            margin-left: -1.5rem;
+        }
+    }
+    
+    .timeline-period {
+        @extend .circle;
+        display: block;
+        padding: 0.7rem;
+        line-height: 1;
+        font-size: 0.6rem;
+        min-height: 4.5rem;
+        min-width: 4.5rem;
+        margin-left: -0.8rem !important;
+        @include breakpoint(medium) {
+            min-height: 5rem;
+            min-width: 5rem;
+            margin-left: -1.1rem !important;
+        }
+        @include breakpoint(large up) {
+            left: 50%;
+            margin-left: -2.5rem !important;
+        }
+        li {
+            list-style: none;
+        }
+        .from {
+            padding-bottom: 0.1rem;
+    
+            span {
+                display: block;
+            }
+            .month {
+                @include margin(0);
+                line-height: 1.2;
+            }
+            .year {
+                font-size: 0.75rem;
+            }
+        }
+        .to {
+            padding-top: 0.1rem;
+        }
+        
+    }
+    .timeline-content {
+        position: relative;
+        margin-left: 3rem;
+        padding-left: 2rem;
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .logo {
+            max-height: 4rem;
+            width: auto;
+        }
+        .date {
+            float: left;
+            display: inline-block;
+        }
+        .label {
+            line-height: 1;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        &:before {
+            
+        }
+        @include breakpoint(large up) {
+            padding: 0;
+            margin-left: 0;
+            width: 45%;
+            &:before {
+                
+            }
+        }
+    
+    }
+    @include breakpoint(large up) {
+        .timeline-block:nth-child(even) .timeline-content {
+            float: right;
+            padding-left: 1rem;
+        }
+        .timeline-block:nth-child(even) .timeline-content::before {
+            left: auto;
+            right: 100%;
+        }
+        .timeline-block:nth-child(even) .timeline-content .button {
+            float: right;
+        }
+        .timeline-block:nth-child(even) .timeline-content .date {
+            left: auto;
+            right: 122%;
+            text-align: right;
+        }
+    }
+}

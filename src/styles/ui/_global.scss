@@ -1,0 +1,432 @@
+$global-font-size: 100% !default;
+$global-width: rem-calc(1200) !default;
+$global-lineheight: 1.5 !default;
+$global-margin: 1rem !default;
+$global-padding: 1rem !default;
+$global-text-direction: ltr !default;
+$global-flexbox: false !default;
+$print-transparent-backgrounds: true !default;
+$body-antialiased: true !default;
+$color-palette: (
+    primary: #ac8fd8,
+    snow: rgb(255, 255, 255),
+    fade: rgb(240, 240, 240),
+    secondary: #e1c5fb,
+    text: #777777,
+    dark: #3c3951,
+    success: #67ac41,
+    warning: #eb884c,
+    alert: #da6a6a,
+    accent: #c088ef
+) !default;
+$bg-color-opacity: 0.75 !default;
+$body-background: get-color(snow) !default;
+$body-font-color: get-color(text) !default;
+$body-font-family: 'Source Sans Pro', sans-serif !default;
+$global-weight-normal: normal !default;
+$global-weight-bold: 600 !default;
+$global-radius: 0.25rem !default;
+
+
+
+/** if primary missing */
+@if not map-has-key($color-palette, primary) {
+    @error 'In $color-palette, you must have a color named "primary".';
+}
+
+
+/** internal variables used for text direction */
+$global-left: if($global-text-direction == rtl, right, left);
+$global-right: if($global-text-direction == rtl, left, right);
+
+
+
+/** export global */
+@mixin global-styles {
+
+
+    @include normalize();
+
+    html,
+    body,
+    app,
+    .web,
+    .app,
+    main {
+        height: 100%;
+    }
+    main {
+        overflow-y: auto;
+    }
+    html {
+        box-sizing: border-box;
+        font-size: $global-font-size;
+        overflow-x: hidden;
+    }
+ 
+
+    /** set box-sizing globally to handle padding and border widths */
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+    }
+
+
+    /** default body styles */
+    body {
+        margin: 0;
+        padding: 0;
+        background: $body-background;
+        font-family: $body-font-family;
+        font-weight: $global-weight-normal;
+        line-height: $global-lineheight;
+        color: $body-font-color;
+        @if ($body-antialiased) {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+    img,
+    form {
+        width: 100%;
+    }
+    a {
+        text-decoration: none;
+    }
+    img {
+
+
+        /** get rid of gap under images by making them display: inline-block; by default */
+        display: inline-block;
+        vertical-align: middle;
+    
+
+        /** grid defaults to get images and embeds to work properly */
+        max-width: 100%;
+        height: auto;
+        -ms-interpolation-mode: bicubic;
+    }
+
+
+    /** make sure textarea takes on height automatically */
+    textarea {
+        height: auto;
+        min-height: 4rem;
+    }
+
+
+    /** make select elements are 100% width by default */
+    select {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+
+    // styles Google Maps and MapQuest embeds properly
+    .map_canvas,
+    .mqa-display {
+        img,
+        embed,
+        object {
+          max-width: none !important;
+        }
+    }
+
+
+    /** reset <button> styles created by most browsers */
+    button {
+        @include disable-mouse-outline;
+        padding: 0;
+        appearance: none;
+        border: 0;
+        background: transparent;
+        line-height: 1;
+    }
+
+
+    /** prevent text overflow on pre */
+    pre {
+        overflow: auto;
+    }
+
+
+    /** internal classes to show/hide elements */
+    .is-visible {
+        display: block !important;
+    }
+    .is-hidden {
+        display: none !important;
+    }
+
+
+    /** display classes */
+    .fixed {
+        position: fixed;
+    }
+    .full-width {
+        min-width: 100%;
+    }
+    .full-height {
+        min-height: 100%;
+    }
+    .display-flex {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    .justify {
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    .flex-divider {
+        flex: 1 1 auto;
+    }
+    .none,
+    .hide,
+    .hidden {
+        display: none;
+    }
+    .invisible {
+        visibility: hidden;
+    }
+    .visible {
+        visibility: visible;
+    }
+    .list-none {
+        list-style: none;
+    }
+    .vertical-align {
+        @include vertical-align;
+    }
+    .vertical-center {
+        @include vertical-center;
+    }
+
+
+    /** offsets */
+    .padding-none {
+        padding: 0;
+    }
+    .padding-v-none {
+        @include padding-v(0);
+    }
+    .padding-h-none {
+        @include padding-h(0);
+    }
+    .margin-none {
+        margin: 0;
+    }
+    .offset {
+        @include breakpoint(medium up) {
+            @include padding-v(3rem);
+        }
+        @include padding-v(2rem);
+        &.xlarge {
+            @include breakpoint(medium up) {
+               @include padding-v(7rem);
+            }
+            @include padding-v(5rem);
+        }
+        &.large {
+            @include breakpoint(medium up) {
+               @include padding-v(4rem);
+            }
+            @include padding-v(3rem);
+        }
+        &.medium {
+            @include breakpoint(medium up) {
+               @include padding-v(1.75rem);
+            }
+            @include padding-v(1.25rem);
+        }
+        &.small {
+            @include padding-v(1rem);
+        }
+        &.tiny {
+            @include padding-v(0.5rem);
+        }
+    }
+    .upset {
+        @include breakpoint(medium up) {
+            padding-top: 3rem;
+        }
+        padding-top: 2rem;
+        &.xlarge {
+            @include breakpoint(medium up) {
+                padding-top: 7rem;
+            }
+            padding-top: 5rem;
+        }
+        &.large {
+            @include breakpoint(medium up) {
+                padding-top: 4rem;
+            }
+            padding-top: 3rem;
+        }
+        &.medium {
+            @include breakpoint(medium up) {
+                padding-top: 1.75rem;
+            }
+            padding-top: 1.25rem;
+        }
+        &.small {
+            padding-top: 1rem;
+        }
+        &.tiny {
+            padding-top: 1rem;
+        }
+    }
+    .downset {
+        @include breakpoint(medium up) {
+            padding-bottom: 3rem;
+        }
+        padding-bottom: 2rem;
+        &.xlarge {
+            @include breakpoint(medium up) {
+                padding-bottom: 7rem;
+            }
+            padding-bottom: 5rem;
+        }
+        &.large {
+            @include breakpoint(medium up) {
+                padding-bottom: 4rem;
+            }
+            padding-bottom: 3rem;
+        }
+        &.medium {
+            @include breakpoint(medium up) {
+                padding-bottom: 1.75rem;
+            }
+            padding-bottom: 1.25rem;
+        }
+        &.small {
+            padding-bottom: 1rem;
+        }
+        &.tiny {
+            padding-bottom: 1rem;
+        }
+    }
+
+
+    /** cleans element from any outlines */
+    .outline-none {
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        outline: none !important;
+    }
+    .border-none {
+        border: none;
+    }
+
+    
+    /** pointers */
+    .pointer,
+    .clickable {
+        cursor:pointer;
+    }
+
+
+    .circle {
+        border-radius: 50% !important;
+    }
+
+    
+
+    /** screen (positions) */
+    .screen {
+        @include screen;
+    }
+    .overlay {
+        z-index: 100;
+    }
+    .underlay {
+        position: absolute;
+        z-index: -1;
+    }
+
+
+
+    /** design */
+    .ease {
+        @include transition(all 1s ease);
+    }
+    .grayscale {
+        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+        filter: gray;
+        -webkit-filter: grayscale(100%);
+        -webkit-transition: all 1.5s ease;
+        -webkit-backface-visibility: hidden;
+    }
+    .grayscale:hover {
+        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+        -webkit-filter: grayscale(0%);
+    }
+    .opacity-default {
+        opacity: 0.75;
+        filter: alpha(opacity=75);
+    }
+    .opacity-none {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .bg-none {
+        background: none;
+    }
+    .bg-fixed {
+        background-attachment: fixed;
+    }
+    .bg-cover {
+        @include bg-cover;
+    }
+    .bg-cover-center {
+        @include bg-cover;
+        background-position: center center;
+    }
+    .bg-cover-top {
+        @include bg-cover;
+        background-position: center top;
+    }
+    .bg-cover-bottom {
+        @include bg-cover;
+        background-position: center 0;
+    }
+    .bg-video {
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        overflow: hidden;
+        -webkit-background-size: cover;
+        background-image: none;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        &:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(get-color(dark), 0.6) !important;
+        }
+        video {
+            margin: auto; 
+            position: absolute; 
+            z-index: -1; 
+            top: 50%; 
+            left: 50%; 
+            -webkit-transform: translate(-50%, -50%); 
+            transform: translate(-50%, -50%); 
+            visibility: visible; 
+            width: auto; 
+            min-width: 100%;
+            min-height: 100%;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+// set the width of a grid column.
+@mixin grid-column-size(
+	$columns: $grid-column-count
+) {
+	width: grid-column($columns);
+}
+
+
+// quick access
+@mixin grid-col-size($columns: $grid-column-count) {
+	@include grid-column-size($columns);
+}

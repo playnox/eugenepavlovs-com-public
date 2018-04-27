@@ -1,0 +1,311 @@
+$button-margin: 0 0 $global-margin 0 !default;
+$button-fill: solid !default;
+$button-background: get-color(primary) !default;
+$button-background-hover: scale-color($button-background, $lightness: -15%) !default;
+$button-color: get-color(snow) !default;
+$button-color-alt: get-color(dark) !default;
+$button-radius: $global-radius !default;
+$button-hollow-border-width: 1px !default;
+$button-fonts: (
+    tiny: 0.65rem,
+    small: 0.65rem,
+    default: 0.75rem,
+    large: 0.85rem,
+    xlarge: 1rem
+) !default;
+$button-sizes: (
+    tiny: 1.5rem,
+    small: 2rem,
+    default: 2.5rem,
+    large: 3.25rem,
+    xlarge: 4.5rem,
+) !default;
+$button-palette: $color-palette !default;
+$button-opacity-disabled: 0.25 !default;
+$button-background-hover-lightness: -20% !default;
+$button-hollow-hover-lightness: -50% !default;
+$button-shadow: 0px 1px 4px rgba(0,0,0, 0.1) !default;
+$button-shadow-hover: 0px 1px 4px rgba(0,0,0, 0.1) !default;
+$button-font-family: $body-font-family !default;
+$button-font-weight: bold !default;
+$button-letter-spacing: 0.025rem !default;
+$button-transition: background-color 0.25s ease-out, color 0.25s ease-out !default;
+
+
+// internal: flip from margin-right to margin-left for defaults
+@if $global-text-direction == 'rtl' {
+    $button-margin: 0 0 $global-margin $global-margin !default;
+}
+
+
+@mixin button-base {
+    @include disable-mouse-outline;
+    @include box-sizing(border-box);
+    // @include padding-v((map-get($button-sizes, default) - map-get($button-fonts, default)) / 2);
+    @include padding-v(0);
+    @include padding-h(map-get($button-sizes, default) / 1.75);
+    display: inline-block;
+    vertical-align: middle;
+    margin: $button-margin;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    border-radius: $button-radius;
+    transition: $button-transition;
+    font-family: $button-font-family;
+    font-weight: $button-font-weight;
+    letter-spacing: $button-letter-spacing;
+    font-size: map-get($button-fonts, default);
+    height: map-get($button-sizes, default);
+    line-height: map-get($button-sizes, default); // map-get($button-fonts, default); // 1;
+    overflow-y: hidden;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: $button-shadow;
+    &:hover, &:focus {
+        outline: none;
+        box-shadow: $button-shadow-hover;
+    }
+}
+
+
+// expands a button to make it full-width.
+@mixin button-expand($expand: true) {
+    @if $expand {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+    }
+    @else {
+        display: inline-block;
+        width: auto;
+        margin: $button-margin;
+    }
+}
+
+
+// sets the visual style of a button.
+@mixin button-style(
+    $background: $button-background,
+    $background-hover: $button-background-hover,
+    $color: $button-color,
+    $background-hover-lightness: $button-background-hover-lightness
+) {
+    @if $color == auto {
+      $color: color-pick-contrast($background, ($button-color, $button-color-alt));
+    }
+    @if $background-hover == auto {
+        $background-hover: scale-color($background, $lightness: $background-hover-lightness);
+    }
+    background-color: $background;
+    color: $color;
+    &:hover, &:focus {
+        background-color: $background-hover;
+        color: $color;
+    }
+}
+
+
+// removes background fill on hover and focus for hollow buttons.
+@mixin button-hollow {
+    &,
+    &:hover, &:focus {
+        background-color: transparent;
+    }
+}
+
+
+@mixin button-hollow-style(
+    $color: get-color(primary),
+    $hover-lightness: $button-hollow-hover-lightness, 
+    $border-width: $button-hollow-border-width
+) {
+    $color-hover: scale-color($color, $lightness: $hover-lightness);
+    border: $border-width solid $color;
+    color: $color;
+    &:hover, &:focus {
+        border-color: $color-hover;
+        color: $color-hover;
+    }
+}
+
+
+// adds disabled styles to a button by fading the element, reseting the cursor, and disabling pointer events.
+@mixin button-disabled(
+    $background: get-color(primary),
+    $color: $button-color
+) {
+    @if $color == auto {
+        $color: color-pick-contrast($background, ($button-color, $button-color-alt));
+    }
+    opacity: $button-opacity-disabled;
+    cursor: not-allowed;
+    &, &:hover, &:focus {
+        background-color: $background;
+        color: $color;
+    }
+}
+
+
+// adds a dropdown arrow to a button.
+@mixin button-dropdown(
+    $size: 0.4em,
+    $color: get-color(snow)
+    // $offset: get-side($button-padding, right)
+) {
+    &::after {
+        @include css-triangle($size, $color, down);
+        position: relative;
+        top: -0.2em;
+        display: inline-block;
+        float: #{$global-right};
+        margin-#{$global-left}: get-side((2.5rem  / 4), right);
+    }
+    @each $size, $value in map-remove($button-sizes, default) {
+        &.#{$size} {
+            &::after {
+                margin-#{$global-left}: get-side(($value  / 4), right);
+            }
+        }
+    }
+
+}
+
+
+// adds all styles for a button. For more granular control over styles, use the individual button mixins.
+@mixin button(
+    $expand: false,
+    $background: $button-background,
+    $background-hover: $button-background-hover,
+    $color: $button-color,
+    $style: $button-fill
+) {
+    @include button-base;
+    @if $style == solid {
+        @include button-style($background, $background-hover, $color);
+    }
+    @else if $style == hollow {
+        @include button-hollow;
+        @include button-hollow-style($background);
+    }
+    @if $expand {
+        @include button-expand;
+    }
+}
+
+
+@mixin ui-button {
+    .button {
+        @include button;
+
+
+        @each $size, $value in map-remove($button-sizes, default) {
+            &.#{$size} {
+                // @include padding-v(($value - map-get($button-fonts, #{$size})) / 2);
+                @include padding-h($value / 1.75);
+                height: $value;
+                font-size: map-get($button-fonts, #{$size});
+                line-height: $value;
+
+
+                // creates round button
+                &.round {
+                    border-radius: $value / 2;
+                }
+            }
+        }
+
+        &.expanded { @include button-expand; }
+
+
+        // colors
+        @each $name, $color in $button-palette {
+            @if $button-fill != hollow {
+                &.#{$name} {
+                    @include button-style($color, auto, auto);
+                }
+            }
+            @else {
+                &.#{$name} {
+                    @include button-hollow-style($color);
+                }
+                &.#{$name}.dropdown::after {
+                    border-top-color: $color;
+                }
+            }
+        }
+
+
+        // hollow style
+        @if $button-fill != hollow {
+            &.hollow {
+                @include button-hollow;
+                @include button-hollow-style;
+                @each $name, $color in $button-palette {
+                    &.#{$name} {
+                        @include button-hollow-style($color);
+                    }
+                }
+                box-shadow: none;
+            }
+        }
+        &.round {
+            border-radius: map-get($button-sizes, default) / 2;
+        }
+
+        
+        // naked
+        &.naked {
+            background-color: transparent;
+            border: transparent;
+            box-shadow: none;
+        }
+
+
+        // disabled style
+        &.disabled,
+        &[disabled] {
+            @include button-disabled;
+            @each $name, $color in $button-palette {
+                &.#{$name} {
+                    @include button-disabled($color, auto);
+                }
+            }
+        }
+
+
+        // dropdown arrow
+        &.dropdown {
+            @include button-dropdown;
+            &::after {
+                top: 0.25em;
+            }
+            @if $button-fill == hollow {
+                &::after {
+                    border-top-color: $button-background;
+                }
+            }
+
+            &.hollow {
+                &::after {
+                    border-top-color: $button-background;
+                }
+                @each $name, $color in $button-palette {
+                    &.#{$name} {
+                        &::after {
+                            border-top-color: $color;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // button with dropdown arrow only
+        &.arrow-only::after {
+            top: -0.1em;
+            float: none;
+            margin-#{$global-left}: 0;
+        }
+    }
+}
